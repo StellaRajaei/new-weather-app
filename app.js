@@ -8,13 +8,13 @@ function refreshWeather(response) {
   let dayElement = document.querySelector("#day");
   let timeElement = document.querySelector("#time");
   let date = new Date(response.data.time * 1000);
-
-  cityElement.innerHTML = response.data.city;
+  let iconElement = document.querySelector("#icon");
 
   timeElement.innerHTML = formatDate(date);
   descriptionElement.innerHTML = response.data.condition.description;
   humidityElement.innerHTML = `${response.data.temperature.humidity}%`;
   temperatureElement.innerHTML = Math.round(temperature);
+  iconElement.innerHTML = `<img src="${response.data.condition.icon_url}" alt="" class="weather-app-icon" />`;
   windSpeedElement.innerHTML = `${Math.round(response.data.wind.speed)}km/h`;
 }
 
@@ -31,6 +31,10 @@ function formatDate(date) {
     "Saturday",
   ];
   let day = days[date.getDay()];
+
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
 
   return `${day} ${hours}:${minutes}`;
 }
